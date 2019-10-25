@@ -280,4 +280,4 @@ checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
 
 discriminator, generator = train(generator, generator_optimizer, discriminator, discriminator_optimizer,
                                  train_dataset, EPOCHS, checkpoint, checkpoint_prefix, seed, BATCH_SIZE, noise_dim)
-print("GAN End")
+print("GAN End.")
