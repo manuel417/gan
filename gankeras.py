@@ -82,7 +82,17 @@ def make_discriminator_model():
     model.add(layers.Flatten())
 
     # final layer with 1 neuron
-    model.add(layers.Dense(1, activation='sigmoid'))  # why this does not have an activation??
+    #
+    # At first, I wondered why this layer did not have an activation??
+    # After searching and reading from the Internet, I found the answer on a paper
+    # https://arxiv.org/abs/1611.04076
+    # It turns out that if you use sigmoid, it will cause vanishing gradients
+    # where the NN cannot learn because the gradients in back propagation are very tiny.
+    # The solution is not to use sigmoid here, but in the loss function used for training
+    # use least squares. In this case, the loss for the discriminator will be the
+    # amount of fake images classified as fake plus the amount of real images classified
+    # real. In the generator, the loss is the amount of fake images classified as real.
+    model.add(layers.Dense(1))  # why this does not have an activation?? - See answer above
 
     return model
 
@@ -177,11 +187,11 @@ def generate_and_save_images(model, epoch, test_input):
         plt.imshow(predictions[i, :, :, 0] * 127.5 + 127.5, cmap='gray')
         plt.axis('off')
 
-    plt.savefig('img/image_at_epoch_{:04d}.png'.format(epoch))
+    plt.savefig('img2/image_at_epoch_{:04d}.png'.format(epoch))
     plt.show()
 
 def display_image(epoch_no):
-    return PIL.Image.open('image_at_epoch_{:04d}.png'.format(epoch_no))
+    return PIL.Image.open('img2/image_at_epoch_{:04d}.png'.format(epoch_no))
 
 
 # Training loop that also shows images as they are being produced and improved
@@ -252,6 +262,7 @@ generated_image = generator(noise, training=False)
 
 # test the discriminator
 discriminator = make_discriminator_model()
+discriminator.summary()
 decision = discriminator(generated_image)
 print("Discriminator decision: ", decision)
 
