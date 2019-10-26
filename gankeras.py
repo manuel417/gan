@@ -222,7 +222,9 @@ def train(generator, generator_optimizer, discriminator, discriminator_optimizer
 
         print ('Time for epoch {} is {} sec'.format(epoch + 1, time.time()-start))
 
-        generate_and_save_images(generator, epochs, seed)
+    # Generate after the final epoch
+
+    generate_and_save_images(generator, epochs, seed)
     return generator, discriminator
 
 print("GAN Start")
