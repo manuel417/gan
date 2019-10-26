@@ -274,7 +274,7 @@ discriminator_optimizer = tf.keras.optimizers.Adam(1e-4)
 
 
 # Setup training loop
-EPOCHS = 50
+EPOCHS = 100
 noise_dim = 100
 num_examples_to_generate = 16
 
