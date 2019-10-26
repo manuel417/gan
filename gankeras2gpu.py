@@ -277,7 +277,7 @@ with strategy.scope():
     discriminator_optimizer = tf.keras.optimizers.Adam(1e-4)
 
     # Setup training loop
-    EPOCHS = 100
+    EPOCHS = 50
     noise_dim = 100
     num_examples_to_generate = 16
 
